@@ -8,19 +8,27 @@ loop_time = 1 # seconds
 time_of_last_success = -1
 time_of_last_failure = -1
 verbose = False
+successful_last_time = -1
 while True:
     try:
         f = urllib2.urlopen(url, data=None, timeout=0.5)
     except urllib2.URLError:
-        time_of_last_failure = time.time()
+        now = time.time()
         if verbose: print "Cannot resolve url",url
-        if time_of_last_success != -1 and time_of_last_failure != -1:
-            print "Connection has failed for this long:", time_of_last_failure - time_of_last_success
+        # The connection worked, so let's see if it failed last time. If so, let's see how long it was down.
+        if time_of_last_success != -1 and time_of_last_failure != -1 and successful_last_time == True:
+            print "Connection failed for this long:", now - time_of_last_success,"+/-",loop_time
+        time_of_last_failure = now
+        successful_last_time = False
         pass
     else:
-        time_of_last_success = time.time()
+        now = time.time()
         if verbose: print "Successfully resolved url", url
-        if time_of_last_success != -1 and time_of_last_failure != -1:
-            print "Connection has worked for this long:",time_of_last_success - time_of_last_failure
+        # The connection failed, so let's see if it worked last time. If so, let's see how long it lasted.
+        if time_of_last_success != -1 and time_of_last_failure != -1 and successful_last_time == False:
+            print "Connection worked for this long:",now - time_of_last_failure,"+/-",loop_time
+        time_of_last_success = now # Ignore the intervening time
+        successful_last_time = True
+
     finally:
         time.sleep(loop_time)
