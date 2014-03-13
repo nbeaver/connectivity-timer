@@ -1,0 +1,4 @@
+-- Detect the lost packets.
+-- Log how long the internet disappears for.
+-- Log how long the internet works for.
+-- Add a tray notification.
