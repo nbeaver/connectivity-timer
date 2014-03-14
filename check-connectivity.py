@@ -5,20 +5,23 @@ import urllib2
 import time
 import socket
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
-url = 'http://www.python.org'
-loop_time = 1 # seconds
-global_timeout = 0.5 # seconds
+url = 'http://www.google.com'
+loop_time = 0.5 # seconds
+global_timeout = 1 # seconds
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
 running_failure_length = None
-verbose = True
+verbose = False
 successful_last_time = False
 socket.setdefaulttimeout(global_timeout)
 start_time = time.time()
 while True:
     try:
         f = urllib2.urlopen(url, data=None, timeout=global_timeout)
+    except socket.timeout:
+        print "Socket timed out!"
+        raise
     except urllib2.URLError:
         now = time.time()
         if time_of_last_success:
