@@ -7,7 +7,7 @@ import socket
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
 url = 'http://www.google.com'
 loop_time = 0.5 # seconds
-global_timeout = 1 # seconds
+global_timeout = 100 # seconds
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
