@@ -5,18 +5,18 @@ import urllib2
 import time
 import socket
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
-url = 'http://www.google.com'
-loop_time = 0.5 # seconds
-global_timeout = 100 # seconds
+url = 'http://www.google.com' #TODO: make a command flag for this
+loop_time = 0.5 # seconds #TODO: make a command flag for this
+global_timeout = 100 # seconds #TODO: make a command flag for this
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
 running_failure_length = None
-verbose = False
+verbose = False #TODO: make a command flag for this
 successful_last_time = False
 socket.setdefaulttimeout(global_timeout)
 start_time = time.time()
-while True:
+while True: # have to end the program manually. TODO: make a keypress like Ctrl-D end the program
     try:
         f = urllib2.urlopen(url, data=None, timeout=global_timeout)
     except socket.timeout:

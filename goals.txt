@@ -1,4 +1,4 @@
--- Detect the lost packets.
--- Log how long the internet disappears for.
--- Log how long the internet works for.
--- Add a tray notification.
+-- DONE: Log how long the internet disappears for.
+-- DONE: Log how long the internet works for.
+-- TODO: Detect the lost packets.
+-- TODO: Add a tray notification.
