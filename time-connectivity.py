@@ -16,6 +16,7 @@ verbose = False #TODO: make a command flag for this
 successful_last_time = False
 socket.setdefaulttimeout(global_timeout)
 start_time = time.time()
+print "Starting timer."
 while True: # have to end the program manually. TODO: make a keypress like Ctrl-D end the program
     try:
         f = urllib2.urlopen(url, data=None, timeout=global_timeout)
