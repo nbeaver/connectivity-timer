@@ -7,8 +7,8 @@ import socket
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
 url = 'http://www.google.com' #TODO: make a command flag for this
 loop_time = 0.5 # seconds #TODO: make a command flag for this
-# TODO: make global timeout wait forever by default.
-global_timeout = 100 # seconds #TODO: make a command flag for this
+# DONE: make global timeout wait forever by default.
+global_timeout = 0 # seconds #TODO: make a command flag for this
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
