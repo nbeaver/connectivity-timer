@@ -8,7 +8,7 @@ import socket
 url = 'http://www.google.com' #TODO: make a command flag for this
 loop_time = 0.5 # seconds #TODO: make a command flag for this
 # DONE: make global timeout wait forever by default.
-global_timeout = 0 # seconds #TODO: make a command flag for this
+global_timeout = 10000 # seconds #TODO: make a command flag for this
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
