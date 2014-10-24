@@ -5,8 +5,21 @@ import urllib2
 import time
 import socket
 
+# For catching Ctrl-C.
+import signal
+import sys
+
 def print_with_time(in_string):
     print time.asctime() + " " + in_string
+
+def exit_cleanly(signal_number, stack_frame):
+    if signal_number == signal.SIGINT:
+        print ''
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+signal.signal(signal.SIGINT, exit_cleanly)
 
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
 url = 'http://www.google.com' #TODO: make a command flag for this
