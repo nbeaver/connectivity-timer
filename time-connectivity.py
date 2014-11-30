@@ -4,6 +4,7 @@ import urllib2
 # http://docs.python.org/2/library/time.html#time.sleep
 import time
 import socket
+import httplib
 
 # For catching Ctrl-C.
 import signal
@@ -24,8 +25,8 @@ signal.signal(signal.SIGINT, exit_cleanly)
 # http://docs.python.org/2.7/library/socket.html#socket.socket.settimeout
 url = 'http://www.google.com' #TODO: make a command flag for this
 loop_time = 0.5 # seconds #TODO: make a command flag for this
-# DONE: make global timeout wait forever by default.
-global_timeout = 10000 # seconds #TODO: make a command flag for this
+# TODO: make global timeout wait forever by default.
+global_timeout = 100000 # seconds #TODO: make a command flag for this
 time_of_last_success = None
 time_of_last_failure = None
 running_connection_length = None
@@ -37,10 +38,18 @@ start_time = time.time()
 print "Starting timer."
 while True: # have to end the program manually. TODO: make a keypress like Ctrl-D end the program
     try:
-        f = urllib2.urlopen(url, data=None, timeout=global_timeout)
+        response = urllib2.urlopen(url, data=None, timeout=global_timeout)
     except socket.timeout:
         print "Socket timed out!"
         raise
+    except socket.error:
+        print "Socket error, not stopping."
+        #TODO: print information on the kind of socket error.
+        pass
+    except httplib.BadStatusLine:
+        print "httplib:BadStatusLine, not stopping."
+        #TODO: print information on the kind of HTTP error.
+        pass
     except urllib2.URLError:
         now = time.time()
         if time_of_last_success:
@@ -67,10 +76,13 @@ while True: # have to end the program manually. TODO: make a keypress like Ctrl-
         if verbose:
             print "Successfully resolved url", url
             print_with_time("Connection has worked for this long: "+str(running_connection_length)+"+/-"+str(loop_time) + " seconds.")
-        # The connection worked, so let's see if it failed last time. If so, let's see how long it was down.
+        # The connection worked, so let's see if it failed last time.
+        # If so, let's see how long it was down.
         if running_failure_length and successful_last_time == False:
             print_with_time("Connection failed for this long: "+str(running_failure_length)+"+/-"+str(loop_time) + " seconds.")
-        time_of_last_success = now # Ignore the intervening time
+        # Don't include the intervening time,
+        # since the connection may have been lost in the meantime.
+        time_of_last_success = now
         successful_last_time = True
         running_failure_length = None
     finally:
