@@ -14,8 +14,9 @@ def print_with_time(in_string):
     print time.asctime() + " " + in_string
 
 def exit_cleanly(signal_number, stack_frame):
+    # TODO: show how long it's been up or down at this point, too,
+    # not just when it loses or regains a connection.
     if signal_number == signal.SIGINT:
-        print ''
         sys.exit(0)
     else:
         sys.exit(1)
