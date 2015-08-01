@@ -6,6 +6,7 @@ import httplib
 
 import signal # For catching Ctrl-C.
 import sys
+import os # For unbuffered stdout.
 
 def prepend_time(in_string):
     return time.asctime() + " " + in_string
@@ -13,6 +14,12 @@ def prepend_time(in_string):
 def exit_cleanly(signal_number, stack_frame):
     # TODO: show how long it's been up or down at this point, too,
     # not just when it loses or regains a connection.
+    try:
+        sys.stdout.close()
+        sys.stderr.close()
+    except:
+        pass
+    
     if signal_number == signal.SIGINT:
         sys.exit(0)
     else:
@@ -32,10 +39,12 @@ running_failure_length = None
 verbose = False #TODO: make a command flag for this
 successful_last_time = False
 socket.setdefaulttimeout(global_timeout)
-start_time = time.time()
+
+sys.stdout = os.fdopen(sys.stdout.fileno(), sys.stdout.mode, 0) # bufsize of 0 is unbuffered.
 sys.stdout.write("Starting timer.\n")
-sys.stdout.flush()
-while True: # have to end the program manually. TODO: make a keypress like Ctrl-D end the program
+start_time = time.time()
+
+while True: # have to end the program manually with Ctrl-C.
     try:
         response = urllib2.urlopen(url, data=None, timeout=global_timeout)
     except socket.timeout:
