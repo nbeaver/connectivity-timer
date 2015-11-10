@@ -48,14 +48,14 @@ while True: # have to end the program manually with Ctrl-C.
     try:
         response = urllib2.urlopen(url, data=None, timeout=global_timeout)
     except socket.timeout:
-        sys.stdout("Socket timed out.\n")
+        sys.stdout.write("Socket timed out.\n")
         pass
     except socket.error:
-        sys.stdout("Socket error, not stopping.\n")
+        sys.stdout.write("Socket error, not stopping.\n")
         # TODO: print information on the kind of socket error.
         pass
     except httplib.BadStatusLine:
-        sys.stdout("httplib: BadStatusLine, not stopping.\n")
+        sys.stdout.write("httplib: BadStatusLine, not stopping.\n")
         # TODO: print information on the kind of HTTP error.
         pass
     except urllib2.URLError:
