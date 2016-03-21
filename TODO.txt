@@ -8,3 +8,4 @@
 -- TODO: Make sure running multiple instances will not interfere.
 -- TODO: Daemonize.
 -- TODO: Get rid of excessive global variables.
+-- TODO: Add a "connection is available" or "connection is not available" message right on startup.
