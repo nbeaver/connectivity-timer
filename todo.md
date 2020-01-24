@@ -1,3 +1,4 @@
+- [ ] convert from Python 2 to Python 3
 - [x] Log how long the internet disappears for.
 - [x] Log how long the internet works for.
 - [ ] Detect the lost packets.
